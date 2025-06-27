@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thư Mời Hẹn Hò</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #ffe4e1;
+        }
+        .hidden {
+            display: none;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .invitation-card {
+            margin-top: 30px;
+            padding: 20px;
+            border: 3px solid black;
+            display: inline-block;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="page1">
+        <h1>Chào công chúa Quỳnh Như</h1>
+        <button onclick="goToPage('page2')">Tiếp tục</button>
+    </div>
+
+    <div id="page2" class="hidden">
+        <h2>Chọn nhà hàng:</h2>
+        <button onclick="selectRestaurant('Korean')">Nhà hàng Hàn Quốc</button>
+        <button onclick="selectRestaurant('Europe')">Nhà hàng Âu</button>
+    </div>
+
+    <div id="page3" class="hidden">
+        <h2>Công chúa sẽ mặc màu gì trong ngày đó?</h2>
+        <input type="color" id="colorPicker" value="#ff69b4">
+        <br><br>
+        <button onclick="goToPage('page4')">Xác nhận màu sắc</button>
+    </div>
+
+    <div id="page4" class="hidden">
+        <h2>Công chúa sẽ đến bằng cách nào?</h2>
+        <button onclick="selectTransport('Xe ngựa sẽ đến rước nàng')">Xe ngựa sẽ đến rước nàng</button>
+        <button onclick="selectTransport('Nàng sẽ đến bằng phép màu khác')">Nàng sẽ đến bằng phép màu khác</button>
+    </div>
+
+    <div id="page5" class="hidden">
+        <h2>Cảm ơn bạn Quỳnh Như đã đưa ra những gợi ý toẹt vời nì.</h2>
+        <p>Vì có thể buổi sáng cả 2 đều bận nên mình sẽ để buổi hẹn này vào buổi tối nhe. Lịch trình cụ thể sẽ được xuất hiện sau đây.</p>
+        <div id="invitationCard" class="invitation-card"></div>
+    </div>
+
+    <script>
+        let selectedRestaurant = '';
+        let selectedColor = '';
+        let selectedTransport = '';
+
+        function goToPage(pageId) {
+            document.querySelectorAll('div').forEach(div => div.classList.add('hidden'));
+            document.getElementById(pageId).classList.remove('hidden');
+        }
+
+        function selectRestaurant(restaurant) {
+            selectedRestaurant = restaurant;
+            goToPage('page3');
+        }
+
+        function selectTransport(transport) {
+            selectedTransport = transport;
+            selectedColor = document.getElementById('colorPicker').value;
+            showInvitation();
+            goToPage('page5');
+        }
+
+        function showInvitation() {
+            let location = selectedRestaurant === 'Europe' ? 'I Hate Monday' : 'Ovenmaru Chicken';
+            let card = document.getElementById('invitationCard');
+            card.style.backgroundColor = selectedColor;
+
+            card.innerHTML = `
+                <h3>Thư Mời Hẹn Hò</h3>
+                <p><strong>Địa điểm:</strong> ${location}</p>
+                <p><strong>Phương tiện:</strong> ${selectedTransport}</p>
+                <p><strong>Lịch trình:</strong></p>
+                <ul>
+                    <li>7 p.m: Chuẩn bị và Di chuyển</li>
+                    <li>8 p.m: Đến nhà hàng</li>
+                    <li>8:15 p.m: Làm điều cần làm</li>
+                    <li>10 p.m: Gửi nàng lại cho HĐQT</li>
+                </ul>
+            `;
+        }
+    </script>
+
+</body>
+</html>
